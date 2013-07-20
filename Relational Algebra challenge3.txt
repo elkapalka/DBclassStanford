@@ -1,0 +1,22 @@
+These problems are more challenging than those in the core set. Try them out to test your skills (and perhaps earn a Statement of Accomplishment with Distinction). 
+
+In this assignment you are to write relational algebra queries over a small database, executed using our RA Workbench. Behind the scenes, the RA workbench translates relational algebra expressions into SQL queries over the database stored in SQLite. Since relational algebra symbols aren't readily available on most keyboards, RA uses a special syntax described in our RA Relational Algebra Syntax guide. 
+
+We've created a small sample database to use for this assignment. It contains four relations:
+    Person(name, age, gender)       // name is a key
+    Frequents(name, pizzeria)       // [name,pizzeria] is a key
+    Eats(name, pizza)               // [name,pizza] is a key
+    Serves(pizzeria, pizza, price)  // [pizzeria,pizza] is a key
+View the database. (You can also download the schema and data.) 
+
+Question 3
+Find all pizzerias that serve only pizzas eaten by people over 30.
+
+(\project_{pizzeria} Serves)
+\diff
+(\project_{pizzeria} (
+    Serves
+    \diff   (       Serves       \join
+        \project_{pizza} (\project_{name} \select_{age>30} Person \join Eats)
+    )
+))

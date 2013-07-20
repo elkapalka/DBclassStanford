@@ -1,0 +1,20 @@
+You've started a new movie-rating website, and you've been collecting data on reviewers' ratings of various movies. There's not much data yet, but you can still try out some interesting queries. Here's the schema: 
+
+Movie ( mID, title, year, director ) 
+English: There is a movie with ID number mID, a title, a release year, and a director. 
+
+Reviewer ( rID, name ) 
+English: The reviewer with ID number rID has a certain name. 
+
+Rating ( rID, mID, stars, ratingDate ) 
+English: The reviewer rID gave the movie mIDa number of stars rating (1-5) on a certain ratingDate. 
+
+Your queries will run over a small data set conforming to the schema. View the database. (You can also download the schema and data.)
+
+Question 5
+Write a query to return the ratings data in a more readable format: reviewer name, movie title, stars, and ratingDate. Also, sort the data, first by reviewer name, then by movie title, and lastly by number of stars. 
+Select distinct Reviewer.name, Movie.title, Rating.stars, Rating.ratingDate
+from Movie, Rating
+join Reviewer on Reviewer.rid=Rating.rid
+where Movie.mid=Rating.mid
+order by Reviewer.name, Movie.title, Rating.stars
