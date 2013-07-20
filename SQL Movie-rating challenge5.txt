@@ -1,0 +1,24 @@
+These problems are more challenging than those in the core set. Try them out to test your skills (and perhaps earn a Statement of Accomplishment with Distinction). 
+
+You've started a new movie-rating website, and you've been collecting data on reviewers' ratings of various movies. There's not much data yet, but you can still try out some interesting queries. Here's the schema: 
+
+Movie ( mID, title, year, director ) 
+English: There is a movie with ID number mID, a title, a release year, and a director. 
+
+Reviewer ( rID, name ) 
+English: The reviewer with ID number rID has a certain name. 
+
+Rating ( rID, mID, stars, ratingDate ) 
+English: The reviewer rID gave the movie mIDa number of stars rating (1-5) on a certain ratingDate. 
+
+Your queries will run over a small data set conforming to the schema. View the database. (You can also download the schema and data.)
+
+Question 5
+
+Find the movie(s) with the lowest average rating. Return the movie title(s) and average rating. (Hint: This query may be more difficult to write in SQLite than other systems; you might think of it as finding the lowest average rating and then choosing the movie(s) with that average rating.) 
+
+select title, avgRating
+from (select mID, avg(stars) as avgRating
+from Rating
+group by mID) join Movie using(mID)
+where not exists (select * from (select avg(stars) as avgTest from Rating group by mID) where avgRating > avgTest)

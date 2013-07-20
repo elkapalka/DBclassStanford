@@ -1,0 +1,28 @@
+These problems are more challenging than those in the core set. Try them out to test your skills (and perhaps earn a Statement of Accomplishment with Distinction). 
+
+You've started a new movie-rating website, and you've been collecting data on reviewers' ratings of various movies. There's not much data yet, but you can still try out some interesting queries. Here's the schema: 
+
+Movie ( mID, title, year, director ) 
+English: There is a movie with ID number mID, a title, a release year, and a director. 
+
+Reviewer ( rID, name ) 
+English: The reviewer with ID number rID has a certain name. 
+
+Rating ( rID, mID, stars, ratingDate ) 
+English: The reviewer rID gave the movie mIDa number of stars rating (1-5) on a certain ratingDate. 
+
+Your queries will run over a small data set conforming to the schema. View the database. (You can also download the schema and data.)
+
+Question 2
+Find the difference between the average rating of movies released before 1980 and the average rating of movies released after 1980. (Make sure to calculate the average rating for each movie, then the average of those averages for movies before 1980 and movies after. Don't just calculate the overall average rating before and after 1980.) 
+select before-after from
+(Select avg(Average) as before from
+(select avg(stars) as Average
+      from Rating 
+Join Movie on Movie.mid=Rating.mid where year<1980
+group BY Rating.mID)) as B,
+(Select avg(Average) as after from
+(select avg(stars) as Average
+      from Rating 
+Join Movie on Movie.mid=Rating.mid where year>=1980
+group BY Rating.mID) )as F

@@ -1,0 +1,23 @@
+hese problems are more challenging than those in the core set. Try them out to test your skills (and perhaps earn a Statement of Accomplishment with Distinction). 
+
+You've started a new movie-rating website, and you've been collecting data on reviewers' ratings of various movies. There's not much data yet, but you can still try out some interesting queries. Here's the schema: 
+
+Movie ( mID, title, year, director ) 
+English: There is a movie with ID number mID, a title, a release year, and a director. 
+
+Reviewer ( rID, name ) 
+English: The reviewer with ID number rID has a certain name. 
+
+Rating ( rID, mID, stars, ratingDate ) 
+English: The reviewer rID gave the movie mIDa number of stars rating (1-5) on a certain ratingDate. 
+
+Your queries will run over a small data set conforming to the schema. View the database. (You can also download the schema and data.)
+
+Question 1
+For each movie, return the title and the 'rating spread', that is, the difference between highest and lowest ratings given to that movie. Sort by rating spread from highest to lowest, then by movie title. 
+select Title, Spread
+from Movie
+join (select mID, MAX(stars) - MIN(stars) as Spread
+        from Rating group BY mID) Rating
+        on Movie.mID = Rating.mID
+order by Spread DESC, Title
