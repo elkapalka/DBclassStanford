@@ -1,0 +1,28 @@
+These problems are more challenging than those in the core set. Try them out to test your skills (and perhaps earn a Statement of Accomplishment with Distinction). 
+
+Students at your hometown high school have decided to organize their social network using databases. So far, they have collected information about sixteen students in four grades, 9-12. Here's the schema: 
+
+Highschooler ( ID, name, grade ) 
+English: There is a high school student with unique ID and a given first name in a certain grade. 
+
+Friend ( ID1, ID2 ) 
+English: The student with ID1 is friends with the student with ID2. Friendship is mutual, so if (123, 456) is in the Friend table, so is (456, 123). 
+
+Likes ( ID1, ID2 ) 
+English: The student with ID1 likes the student with ID2. Liking someone is not necessarily mutual, so if (123, 456) is in the Likes table, there is no guarantee that (456, 123) is also present. 
+
+Your queries will run over a small data set conforming to the schema. View the database. (You can also download the schema and data.) 
+
+Question 5
+
+Find the number of students who are either friends with Cassandra or are friends of friends of Cassandra. Do not count Cassandra, even though technically she is a friend of a friend. 
+
+select count (i) from
+(select id2 as i from Friend 
+join Highschooler H on H.id=Friend.id1 where H.name="Cassandra"
+union 
+select id2 as i from 
+(select id2 as i from Friend 
+join Highschooler H on H.id=Friend.id1 where H.name="Cassandra") as F
+, Friend
+where F.i=Friend.id1 and Friend.id2<>(Select id from Highschooler  where name="Cassandra"))
