@@ -1,0 +1,21 @@
+You've started a new movie-rating website, and you've been collecting data on reviewers' ratings of various movies. There's not much data yet, but you can still try out some interesting queries. Here's the schema: 
+
+Movie ( mID, title, year, director ) 
+English: There is a movie with ID number mID, a title, a release year, and a director. 
+
+Reviewer ( rID, name ) 
+English: The reviewer with ID number rID has a certain name. 
+
+Rating ( rID, mID, stars, ratingDate ) 
+English: The reviewer rID gave the movie mIDa number of stars rating (1-5) on a certain ratingDate. 
+
+Your queries will run over a small data set conforming to the schema. View the database. (You can also download the schema and data.)
+
+Question 4
+
+Find the titles of all movies not reviewed by Chris Jackson. 
+ 
+select title from Movie
+where mID not in (select mID from Rating
+where rID in (select rID from Reviewer
+where name = "Chris Jackson") )
